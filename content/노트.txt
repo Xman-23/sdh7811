@@ -1,0 +1,44 @@
+b_ref 	서로 관련있는 글임을 나타내기 위한 그룹을 위해 사용
+		새글 : 글번호 동일하게  설정
+		답글 : 부모글의 b_ref와 동일하게 설정
+		
+b_step		서로 관련있는 글 일때에 글이 출력되는 순서를 위해 사용.
+		새글 : 0 으로 설정
+		답글 : 
+			이미 달려 있는 답글들의 b_step 을 1씩 증가		
+			부모글의 b_step + 1로 설정
+
+
+b_level		답글의 깊이(계층)을 위하여 사용
+		새글 : 0으로 설정
+		답글 : 부모글의 b_level +1 
+
+no		title		b_ref	b_step
+1		a			1		0
+2		b			2		0 <
+3		c			3		0
+
+4		b1			2		3
+5		b2			2		2
+6		b3			2		1
+
+1		a
+2		b
+6			b3
+5			b2
+					b22
+4			b1
+
+
+3
+select title from board order by b_ref,b_step
+
+select rownum n, title
+from(select title from board order by b_ref,b_step);
+
+where rownum
+
+select no,title,writer,pwd,content,regdate,hit,fname,b_ref,b_step,b_level 
+from(select rownum n, no,title,writer,pwd,content,regdate,hit,fname,b_ref,b_step,b_level
+from(select * from board order by b_ref,b_step))
+where n between 11 and 20;
