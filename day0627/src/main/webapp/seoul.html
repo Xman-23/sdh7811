@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+
+	span {
+		display: inline-block;
+		margin: 5px;
+		cursor: pointer;
+	}
+	
+</style>
+<script type="text/javascript"
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=66e6443830d8a36c018aa49639cf3542"></script>
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+		mapContainer = document.getElementById('map');
+
+		mapOption = {
+			center : new kakao.maps.LatLng(35.450701, 136.570667),
+			level : 3
+		};
+		map = new kakao.maps.Map(mapContainer, mapOption);
+
+		var arr;
+		var totalRecords = 1;
+		var totalPage = 1;
+		var pageSize = 10;
+		var pageGroup = 10;
+
+		$.ajax({
+			url : "서울시 공영주차장 안내 정보.json",
+
+			success : function(data) {
+				arr = data['DATA'];
+				totalRecords = arr.length;
+
+				totalPage = Math.ceil(totalRecords / pageSize)
+				console.log(totalPage);
+				printPage(1);
+				printPageNumber(1);
+
+			}
+		});
+
+		function printPage(pageNUM) {
+			$("#list").empty();
+
+			var start = (pageNUM - 1) * pageSize + 1;
+			var end = start + pageSize - 1;
+
+			if (end > totalRecords) {
+				end = totalRecords
+			}
+			for (var i = start; i < end; i++) {
+				var row = arr[i];
+				console.log(row);
+				var tr = $("<tr></tr>");
+				$(tr).addClass("item");
+				$(tr).attr({
+					lat : row['lat'], //'lat'속성의 값
+					lng : row['lng'] // 'lng'속성의 값
+				})
+				$(tr).append(($("<td></td>")).html(row['parking_name'])) //arr 의 속성 이름
+				$(tr).append(($("<td></td>")).html(row['addr'])) // arr 의 속성 이름
+				$(tr).append(($("<td></td")).html(row['lat'])) // arr 의 속성 이름
+				$(tr).append(($("<td></td>")).html(row['lng'])) // arr 의 속성이름
+				$(tr).append(($("<td></td")).html(row['']))
+				$("#list").append(tr);
+			}
+		}//end printPage
+
+		function printPageNumber(pageNUM) {
+			$("#pageing").empty();
+
+			var startPage = Math.floor((pageNUM - 1) / pageGroup) * pageGroup+ 1
+			var endPage = startPage + pageGroup - 1;
+
+			if (endPage > totalPage) {
+				endPage = totalPage;
+			}
+			if (startPage > 1) {
+				var span = $("<span></span>").html("[맨처음으로]");
+				$(span).attr("page", 1);
+				$("#pageing").append(span);
+			}
+			if (startPage > 1) {
+				var span = $("<span></span>").html("[이전]");
+				$(span).attr("page", startPage - 1);
+				$("#pageing").append(span);
+			}
+			for (i = startPage; i <= endPage; i++) {
+				var span = $("<span></span>").html(i); //1~~1600;
+
+				$(span).attr("page", i);
+				$("#pageing").append(span);
+			}
+
+			if (endPage < totalPage) {
+
+				var span = $("<span></span>").html("[다음]");
+				$(span).attr("page", endPage + 1);
+				$("#pageing").append(span);
+			}
+			if (endPage < totalPage) {
+				var span = $("<span></span>").html("[맨끝으로]");
+				
+				page = totalPage;
+				$(span).attr("page",page);
+				$("#pageing").append(span);
+			}
+		}
+		
+		$(document).on("click","span",function(){
+			var page = $(this).attr("page"); 
+			printPage(page);	
+			printPageNumber(page); 
+		});
+		
+		
+		
+		$(document).on("click",".item",function(){
+			var lat = Number($(this).attr("lat")); //tr 
+			var lng = Number($(this).attr("lng"));
+			
+			console.log("위도"+lat);
+			console.log("경도"+lng);
+			
+			newLatLng = new kakao.maps.LatLng(lat,lng);
+			
+			map.panTo(newLatLng);	
+			
+			
+			var marker = new kakao.maps.Marker({
+			    position: newLatLng
+			});
+
+			
+			marker.setMap(map);
+
+			
+		});
+	});
+</script>
+</head>
+<body>
+	<div id="pageing"></div>
+	<table border="1" width="80%">
+		<thead>
+			<tr>
+				<th>주차장명</th>
+				<th>주소</th>
+				<th>위도</th>
+				<th>경도</th>
+			</tr>
+		</thead>
+		<tbody id="list">
+
+		</tbody>
+	</table>
+	<hr>
+	<div id="map" style="width: 100%; height: 350px;"></div>
+</body>
+</html>

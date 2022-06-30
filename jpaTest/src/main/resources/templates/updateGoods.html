@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<h2>상품수정</h2>
+	<hr>
+	<form action="/saveGoods" method="post">
+	<input type="hidden" name="no" th:name="no" th:value="${g.no}">
+	상품이름 : <input type="text" name="name" th:name="name" th:value="${g.name}">
+	상품가격 : <input type="text" name="price" th:name="price" th:value="${g.price}">
+	상품수량 : <input type="text" name="qty" th:name="qty" th:value="${g.qty}">
+	상품사진 : <input type="text" name="fname" th:name="fname" th:value="${g.fname}">
+	<input type="submit" value="확인"> 
+	
+	</form>
+</body>
+</html>

@@ -1,0 +1,7 @@
+thymeleaf 는 jsp를 대신하는 것입니다
+==> jsp 에서는 controller에서 상태유지 한 것을 jstl 태그와 표현식을 이용해서 출력
+==> thymeleaf 에서는 controller에서 상태 유지 한 것을 thymeleaf 를 이용해서 출력
+
+thymeleaf 에서 Ajax 은 어떻게 해요 ??
+- 원래 하던 대로 하면 됩니다.
+XmlHttpRequest , jquery Ajax을 이용할 수 있습니다.

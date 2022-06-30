@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+#list {
+	list-style: none;;
+}
+</style>
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+
+		$.ajax({
+			url : "/newsList",
+			success : function(data) {
+				$.each(data, function() {
+					var title = this.title;
+					var url = this.url;
+					if (this.title != "") {
+						var li = $("<li></li>").html(title);
+						$(li).attr("url", this.url); //li 의 url 속성 추가
+						$("#list").append(li);
+					}
+				})
+				/* for(var i=0 ; i<data.length;i++)
+				{
+					var row = data[i];
+					
+					var tr =$("<tr></tr>")
+					var a = $()
+					$(tr).addClass("item");
+					$(tr).attr({
+						url:row.url
+					})
+					$(tr).append(($("<td></td>")).html(row.title));
+					$(tr).append(($("<td></td>")).html(row.url));
+					
+				
+					$("#list").append(tr);
+					}newsList.html
+				} 
+				 */
+			}
+		})
+		$(document).on("click","li",function(){
+			var url =  $(this).attr("url"); //attr 은 javascript 가 아니라 jquery 함수이기 떄문에 $를 붙여줘야한다.
+			location.href = url; //location.href 지정된 곳으로 가라
+		});
+	})
+</script>
+</head>
+<body>
+	<ul id="list"></ul>
+</body>
+</html>

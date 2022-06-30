@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"> <!-- xmlns:th="http://www.thymeleaf.org" 타이리프 사용-->
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<!-- 태그 속성으로 thymeleaf 를 사용 -->
+	이름 : <span th:text="${name}"></span>
+	나이 : <span th:text="${age}"></span>
+	<hr>
+	<h2>과일 목록</h2>
+	<ul>
+		<!-- th:each="{반복할 변수를 담을 변수}:{반복할 변수}" 반복문 -->
+		<li th:each="f:${list}">
+		<span th:text="${f}"></span>
+		</li>
+	</ul>
+</body>
+</html>

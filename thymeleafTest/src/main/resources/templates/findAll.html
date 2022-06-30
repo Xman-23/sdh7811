@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- ajax 를 하기 위해서 src="https://code.jquery.com/jquery-3.6.0.min.js" 설정해줘야한다 -->
+<script type="text/javascript" >
+	$(function () {
+		$("#btnNews").click(function () {
+			$.ajax({
+				url:"/news",
+				success:function(data)
+				{
+					alert(data);
+				}
+			})
+			
+		})
+	})
+
+</script>
+</head>
+<body>
+	<h2>책 목록</h2>
+
+	<hr>
+	<button id="btnNews">실시간 뉴스 읽어 오기 </button>
+
+	<table border="1" width="100%">
+		<thead>
+			<tr>
+				<th>책번호</th>
+				<th>책이름</th>
+			<tr>
+		</thead>
+		<tbody>
+			<tr th:each="b:${list}">
+				<td th:text="${b.bookid}"></td>
+
+				<!-- <td th:text="${b.bookname}"> -->
+				<td><a th:href="@{'/detailBook/'+${b.bookid}}" th:text="${b.bookname}"></a></td>
+				<!-- @{} <--String 으로 취급 -->
+				<!-- detailBook?bookid=10(쿼리 스트링 -->
+				<!-- detailBook/10(uri로 전달하는 것을 권한장한다) -->
+
+				<td th:text="${b.publisher}"></td>
+				<td th:text="${b.price}"></td>
+			</tr>
+		</tbody>
+	</table>
+	<hr>
+	<a href="/insertBook">등록하기</a>
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+$(function () {
+	/* setInterval(function () {
+		var today = new Data();
+		$("#timer").html(today);
+	},1000); */
+	
+	setInterval(() => {
+		var today = new Date(); //오늘 날짜를 불러오는 클래스
+		$("#timer").html(today); //div 에 html today 추가
+	}, 1000);
+})
+</script>
+</head>
+<body>
+	<div id="timer"></div>
+</body>
+</html>

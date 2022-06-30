@@ -1,0 +1,16 @@
+create table schedule(
+	no number primary key,
+	event_name varchar2(50), 
+	event_date date
+);
+
+create sequence seq_schedule;
+----------------------------------------------------------------------------------------------------------------------------------
+
+create table cart(
+	no number primary key,
+	g_no number,
+	qty number
+);
+
+create sequence seq_cart;

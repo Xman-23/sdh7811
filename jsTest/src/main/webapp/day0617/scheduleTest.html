@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<link rel="stylesheet" href="../jquery-ui-1.13.1.custom/jquery-ui.css">
+<style type="text/css">
+	body {
+	font-size: 62.5%
+	}
+	h1 {
+	text-align: center;
+	}
+	
+	input[type=text],label {
+		margin-bottom: 12px;
+		padding: .4em;
+		width: 95%;	
+	}
+</style>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="../jquery-ui-1.13.1.custom/jquery-ui.js"></script>
+<script type="text/javascript">
+	$(function () {
+		
+		
+		
+		function loadSchedule() {
+			//Ajax를 통하여 모든 스케줄 목록을 읽어와서
+			//ouput에 h1태그로 추가 해 봅니다.
+			
+			$("#output").empty(); //method 안에다가 적어 준다..
+			
+			$.ajax({
+				url:"/listSchedule",
+				//data: list 를 불러올때 data 가 필요 없다
+				success:function(data){ //select 문의 결과를 담을 매개변수 data
+					//data 는 객체 배열로 받아오고
+					$.each(data,function(){//function(index,item)
+						//객체 배열만큼 반복문 = $.each
+						var eventName = this.event_name; //오라클에 선언된 컬럼 이름 
+						///listSchedule 안에 담겨진 event_name 의 객체를 가져온다
+						var eventDate = this.event_date; //오라클에 선언된 컬럼 이름
+						//listSchedule 안에 담겨진 event_date  의 객체를 가져온다
+						//객체 하나마다 document
+						var h1 = $("<h1></h1>").html(eventName+":"+eventDate)
+						$("#output").append(h1);
+					})
+				}
+			})
+		}
+		
+		loadSchedule(); // 함수 호출 필수..
+		
+		$("#open_button").click(function () {
+			$("#a").dialog("open");
+		});
+		
+		$("#a").dialog({
+			buttons:{
+				submit:function(){
+					var eventName = $("#event_name").val();
+					var eventDate = $("#event_date").val();
+					//$("#output").append($("<h1></h1>").html(eventName+":"+eventDate)); h1에 추가해서 output 으로 추가
+
+					//var date = //{속성명 : 값}
+								//VO 이름과 똑같이 같아야한다
+					var data = {event_name:eventName,
+								event_date:eventDate}
+								
+					$.ajax({
+						url:"/insertSchedule",
+						data:data,
+						success:function(){
+							alert("OK");
+							loadSchedule();
+						}
+						
+					})		
+					
+					
+					$("#event_name").val("");
+					$("#event_date").val("");
+					$("#a").dialog("close");
+					
+				},
+				reset:function(){
+					$("#event_name").val("");
+					$("#event_date").val("");
+					
+				},
+				cancel:function(){
+					
+					$("#event_name").val("");
+					$("#event_date").val("");
+					$("#a").dialog("close");
+					
+				}
+			},
+			modal:true, // modal 설정
+			autoOpen:false // 다이얼 이 자동으로 안 나오게 설정
+		}); //modal less
+		
+		$("#event_date").datepicker({
+			//dateFormat:'yy년 mm월 dd일',
+			dateFormat:"yy/mm/dd",
+			numberOfMonths:3
+		});
+	});
+
+
+</script>
+</head>
+<body>
+
+		<h1 id="open_button">일정 생성</h1>
+		<hr>
+		<div id="output"></div>
+		<div id="a">
+		<h1>일정입력하기</h1>
+		<label for="event_name">일정이름</label>
+		<input type="text" id="event_name">
+		<label for="event_date">날짜</label>
+		<input type="text" id="event_date">
+		</div>
+		
+</body>
+</html>

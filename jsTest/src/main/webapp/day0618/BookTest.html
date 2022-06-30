@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<link rel="stylesheet" href="../jquery-ui-1.13.1.custom/jquery-ui.min.css">
+<link rel="stylesheet" href="../jquery.jqGrid-4.4.3/css/ui.jqgrid.css">
+
+<script type="text/javascript" src="../jquery.jqGrid-4.4.3/js/jquery-1.7.2.min.js"></script>
+<script type="text/javascript" src="../jquery.jqGrid-4.4.3/js/i18n/grid.locale-en.js"></script>
+<script type="text/javascript" src="../jquery.jqGrid-4.4.3/js/jquery.jqGrid.min.js"></script>
+<script type="text/javascript">
+	$(function () {
+		
+		var delDlg = {
+				onclickSubmit:function(params) //클릭을 완료 했을 떄
+				{
+					console.log(params)
+					var selectedRow = $("#goods").getGridParam("selrow"); //행번호 읽어오기
+					rowData = $("#goods").getRowData(selectedRow); //행번호의 해당 데이터 읽어오기
+					return {bookid:rowData.bookid} //서버로 그 선택한 행의 데이터(도서)의 도서번호를 전달함
+				}
+		}
+		
+		
+		$("#goods").jqGrid({
+			url :"/listbook",// 서버의 주소
+			editurl:"/updateBook",
+			pager:"#pager", // paging 처리
+			caption:"Books", //제목
+			height:"100%", // 세로길이
+			rowNum:20,
+			rowList:[10,20,30],
+			colNames:["bookid","bookname","publisher","price"],
+			colModel:[
+				{name:"bookid",index:"bookid",width:40,editable:true}, //edittable : 변경될 내용을 출력
+				{name:"bookname",index:"bookname",width:250,editable:true},
+				{name:"publisher",index:"publisher",width:100,editable:true},
+				{name:"price",index:"price",width:100,editable:true}	
+			]
+		}).navGrid("#pager",{
+			search:true,
+			edit:true,
+			add:true,
+			del:true
+		},{/*edit*/},{/*add*/},delDlg
+		)
+		//goods 를 데리고 호출;
+	})
+	
+</script>
+
+</head>
+<body>
+	<table id="goods"></table>
+	<div id="pager"></div>
+</body>
+</html>

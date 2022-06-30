@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<link rel="stylesheet" href="../jquery-ui-1.13.1.custom/jquery-ui.css">
+<style type="text/css">
+		*{
+		margin: 0px;
+		padding: 0px;
+	}
+	
+	body{
+		font-size: 62.5%;
+	}
+	
+	.item{
+		margin: 3px;
+		padding: 5px;
+	}
+	
+	.item > img{
+		width: 100px;
+		height: 100px;
+	}
+	
+	#wrap{
+		overflow: hidden;
+	}
+	
+	#wrap > div{
+		float: left;
+	}
+	
+	#dock{
+		position: fixed;
+		min-height: 120px;
+		width: 100%;
+		bottom: 0px;
+		z-index: 1;
+	}
+	#dock > div {
+		float: left;
+	}
+	
+</style>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="../jquery-ui-1.13.1.custom/jquery-ui.js"></script>
+<script type="text/javascript">
+	$(function () {
+		
+		/*[{"no":1,"item":"축구공1","qty":10,"price":5000,"fname":"ball1.jpg"},{"no":2,"item":"축구공2","qty":10,"price":6000,"fname":"ball2.jpg"},{"no":3,"item":"축구공3","qty":10,"price":7000,"fname":"ball3.jpg"}*/
+		
+		
+		var arr;
+			
+		$.ajax({
+				url:"/listGoods",
+				success:function(data){
+					arr = data;
+					
+					$.each(arr,function(){
+						var div = $("<div></div>"); //미래에 있는 div
+						$(div).addClass("ui-widget-content");
+						$(div).addClass("ui-corner-all");
+						$(div).addClass("item");
+					
+						var img = $("<img/>");
+						$(img).attr("src","../goods/"+this.fname);
+						var span = $("<span></span>").html(this.no).addClass("no");
+						var p_no = $("<p></p>").html("상품번호:").append(span);//.addClass("no");
+						var p_item = $("<p></p>").html("상품이름:"+this.item);
+						var p_qty = $("<p></p>").html("상품수량:"+this.qty);
+						var p_price = $("<p></p>").html("상품가격:"+this.price);
+						
+						var input_qty = $("<input/>").attr({
+							type:"text",
+							value:1
+						}); //input 태그를 생성해주고 attr 로 속성을 부여해준다.
+						
+						$(input_qty).addClass("qty"); //input_qty에 대한 클래스를 만들어준다
+						
+						$(input_qty).css("display","none"); //끌어오기 전에 수량을 보이지 않도록 display : none 설정
+						
+						$(div).append(img,p_no,p_item,p_qty,p_price,input_qty);
+						
+						$("#wrap").append(div);
+					})
+					//ajax 통신이 끝난 뒤에 실행
+			$("#wrap > div").draggable({
+				helper:"clone",
+				zIndex:100,
+				scroll:false
+			}); 
+	}});
+		
+		
+		$("#dock").droppable({
+			accept:"#wrap >div",
+			drop:function(event,ui)
+			{
+				 $(ui.draggable).fadeOut(function () {
+					$(this).appendTo("#dock").fadeIn();
+					$(this).find(".qty").css("display","inline-block") // "qty" 의 클래스를 find로 찾아 준뒤 display 로 보여준다
+				}) 
+			}
+		});
+		$("body").droppable({
+			accpet:"#dock > div",
+			drop:function(event,ui){
+				$(ui.draggable).fadeOut(function () {
+					$(this).appendTo("#wrap").fadeIn();
+				})
+			}
+			
+		});	
+		
+		
+		$("#btn").click(function () {
+			var list = $("#dock").find(".item");
+			var data = [];
+			
+			$.each(list,function(){
+				var g_no = $(this).find(".no").html();
+				var qty = $(this).find(".qty").val();
+				data.push({no:0,g_no:g_no,qty:qty});
+			
+			});
+		
+			
+			$.ajax({
+			type : "POST",
+			url:"/insertCart",
+			data:JSON.stringify(data),
+			contentType:'application/json; charset=UTF-8',
+			dataType:"json",
+			success:function(data)
+			{
+				alert("OK");
+			}
+			
+			
+			})
+			
+			
+			/* $.ajax({
+				url:"/insertCart",
+				data:data,//{list:[{no:o,g_no:1,qty:10},{no:o,g_no:2,qty:6},{no:o,g_no:2,qty:1}]}
+				success:function(data)
+					{
+						console.log(data);
+						/* cnt++;
+						fi(cnt == list.length)
+						{
+							alert("장바구니에 모두 닫혔습니다")
+						} 
+					}
+				}) */
+				
+		});
+	})
+</script>
+</head>
+<body>
+		<div id="wrap"></div>
+		<div id="dock"class="ui-state-error">
+		<button id="btn">장바구니</button>
+		
+		</div>
+		
+</body>
+</html>

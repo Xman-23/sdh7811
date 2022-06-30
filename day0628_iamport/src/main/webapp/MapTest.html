@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	var a = [1,2,3,4,5,6,7,8,9,10]
+	
+	var b = [];
+	for(var i=0;i<a.length;i++){
+		b.push(a[i]*2); //배열에 a[i]자리의 *2만큼 값을 넣어준다
+	}
+	console.log(a);
+	console.log(b);
+	
+	
+	/* var c = a.map(function (value,index,arr) { 
+		//a의 배열만큼 루프를 돈다
+		console.log(value);
+		console.log(index);
+		console.log(arr)
+		return value*2;
+	}) */
+	
+	var c = a.map ((value,index,arr) => {
+		return value*2;
+	})
+	
+	console.log(c);
+</script>
+</head>
+<body>
+
+</body>
+</html>

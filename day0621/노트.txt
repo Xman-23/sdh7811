@@ -1,0 +1,1 @@
+insert into emp values(1020,'김은영',10,100,10,sysdate,null,null,null,null,'rola70@nate.com');

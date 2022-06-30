@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+#list {
+	list-style: none;;
+}
+</style>
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+
+		$.ajax({
+			url : "/newsList",
+			success : function(data) {
+				$.each(data, function(index, item) {
+					var sdh = item
+					console.log(sdh);
+					var li = $("<li></li>");
+					var a = $("<a></a>").html(item.title)
+							.attr("href", item.url);
+					$(li).append(a);
+					$("#list").append(li);
+				})
+
+			}
+		})
+
+	})
+</script>
+</head>
+<body>
+	<ul id="list"></ul>
+</body>
+</html>

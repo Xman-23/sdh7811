@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<style type="text/css">
+	* {
+		margin: 0px;
+		padding: 0px;
+	}
+	
+	body {
+		background: #525252;
+	}
+	
+	.item {
+		margin: 5px;
+		width: 100px;
+		height: 100px;
+		
+		background-color: white;
+		border-radius: 10px;
+		float: left;
+	}
+	.big {
+	
+		width: 210px;
+		height: 430px;	
+	}
+	.normal {
+		width:  210px;
+		height: 210px;
+	}
+	.small{
+		width: 100px;
+		height: 100px;
+	}
+
+</style>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+<script type="text/javascript">
+	$(function name() {
+		$("#box").masonry({
+			itemSelector:".item",
+			columWidth:110
+		})
+	})
+
+</script>
+</head>
+<body>
+	<div id="box"> 
+		<div class="item small"></div>
+		<div class="item big"></div>
+		<div class="item normal"></div>
+		<div class="item small"></div>
+		<div class="item small"></div>
+		<div class="item samll"></div>
+		<div class="item normal"></div>
+		<div class="item normal"></div>
+		<div class="item small"></div>
+		<div class="item small"></div>
+		<div class="item small"></div>
+		<div class="item big"></div>
+	</div>
+
+</body>
+</html>

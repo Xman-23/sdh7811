@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+<style type="text/css">
+	.check_num_input
+		{
+			display:  none;
+		}
+	.input
+	{
+		display: none;
+	}	
+</style>
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	$(function () {
+		var sendEmail;
+		
+		$("#btnSend").click(function () {
+			var data = {email:$("#email").val()};
+			$.ajax({
+				url:"/sendMail",
+				data:data,
+				success:function(email){
+					sendEmail = email;
+					$(".check_num_input").css("display","block");
+				}
+			})
+		})
+		
+		$("#btnCheck").click(function () {
+			var checkEmail = $("#checkEmail").val();
+			console.log(sendEmail);
+			if (sendEmail == checkEmail) {
+				alert("인증 되었습니다");
+				$(".input").css("display","block");
+				
+			}else {
+				alert("인증에 실패하였습니다.")
+			}
+			
+			
+		})
+		
+		
+		
+	})
+</script>
+</head>
+<body>
+	<h2>회원가입</h2>
+	이메일 : <input type="email" id="email"> 
+	<button id="btnSend">인증번호 전송</button>
+	<hr>
+	<div class="check_num_input">
+	인증번호 : <input type="text" id="checkEmail" >
+	<button id="btnCheck">인증하기</button>
+	</div>
+	<hr>
+		<form class="input">
+			아이디 : <input type="text" name="id" id="id"><br>
+			비밀번호 : <input type="password" name="pwd" id="pwd"><br>
+			이름 : <input type="text" name="name" id="name"><br>
+			자기소개 <br>
+			<textarea rows="8" cols="70" name="self"></textarea>
+			<br>	
+		</form>
+		<button>가입하기</button>
+</body> 
+</html>

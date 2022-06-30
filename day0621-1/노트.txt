@@ -1,0 +1,15 @@
+create table member100 (
+	id varchar2(20) primary key,
+	pwd varchar2(100),
+	name varchar2(20),
+	role varchar2(20)
+);
+--------------------------------------------------------------
+DI : 어플리케이션에 필요한 객체를 직접 생성하지 않고 스프링 컨테이너가 대신 만들어주는 것 을 말한다
+(객체에 대한 이야기)
+
+is a  = a 클래스를 b가 상속 한다 (extends)
+has a = a 클래스의 멤버를 b가 사용한다.
+
+OOP -> AOP : OOP를 더 OOP 답게
+(메소드)

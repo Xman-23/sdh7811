@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h2>상품 목록</h2>
+	
+	<table border="1" width=100%>
+		<thead>
+			<tr>
+				<th>상품번호</th>
+				<th>책이름</th>
+				<th>가격</th>
+				<th>수량</th>
+				<th>사진</th>
+				<td>Action</td>
+			<tr>
+		</thead>
+		<tbody>
+			<tr th:each="g:${list}">
+			<td th:text="${g.no}"></td>
+			<td th:text="${g.name}"></td>
+			<td th:text="${g.price}"></td>
+			<td th:text="${g.qty}"></td>
+			<td th:text="${g.fname}"></td>
+			<td>
+				<a th:href="@{'/updateGoods/'+${g.no}}" th:text="수정"></a>
+			</td>
+			<tr>
+		</tbody>
+	</table>
+	<hr>
+	<a href="insertGoods.html">상품 등록하기</a>
+	
+</body>
+</html>

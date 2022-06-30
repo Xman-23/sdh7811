@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$("#btnRead").click(
+				function() {
+					$.ajax({
+						url : "/book",
+						success : function(data) {
+							console.log(data);
+							$.each(data, function(index, item) {
+								var li = $("<li></li>").html(item.bookTitle)
+										.attr("link", item.url);
+								$("#list").append(li);
+
+							})
+						}
+					})
+				})
+			$(document).on("click","li",function(){
+				var base = "https://www.hanbit.co.kr/";
+				var link = base + $(this).attr("link");
+				location.href=link;
+			})	
+	})
+</script>
+
+</head>
+<body>
+	<ul id="list"></ul>
+	<hr>
+	<button id="btnRead">새책 읽어오기</button>
+</body>
+</html>
