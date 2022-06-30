@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	function total() {
+		name = document.getElementById("name").value;
+		kor = Number(document.getElementById("kor").value);
+		eng = Number(document.getElementById("eng").value);
+		math = Number(document.getElementById("math").value);
+		alert(name);
+		alert(kor);
+		alert(eng);
+		alert(math);
+		total = kor+eng+math;
+		avg = (kor+eng+math)/3;
+		document.getElementById("total").innerHTML = total;
+		document.getElementById("avg").innerHTML = avg;
+		
+	}
+
+</script>
+
+
+</head>
+<body>
+		학생이름 : <input type="text" id="name"><br>
+		국어 점수 : <input type="number" id="kor"><br>
+		영어 점수 : <input type="number" id="eng"><br>
+		수학 점수 : <input type="number" id="math"><br>
+		<input type="button" value="총점" onclick="total()"><br>
+		총점 : <span id="total"></span><br>
+		평균 : <span id="avg"></span><br>
+		
+</body>
+	
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script type="text/javascript">
+	var students = []; //[] 배열을 뜻한다
+	
+	window.onload=function()
+	{	
+		
+		var clearInput = function () {
+			for(i=0; i<arguments.length; i++)
+				{
+					document.getElementById(arguments[i]).value="";	
+				}
+			}
+		
+			document.getElementById("btnOk").onclick=function(){
+			var student = {}; //{} 객체를 뜻한다
+			student.name = document.getElementById("name").value;
+			student.kor = Number(document.getElementById("kor").value);
+			student.math = Number(document.getElementById("math").value);
+			student.eng = Number(document.getElementById("eng").value);
+			student.sien = Number(document.getElementById("sien").value);
+			
+			student.getSum = function() {
+				return this.kor+this.math+this.eng+this.sien;
+			}
+			student.getavg = function() {
+				return this.getSum()/4;
+			}
+			
+			students.push(student); // 배열에 객체 넣기 (push) 
+			console.log(students); 
+			console.log("-------------------------------")
+			
+			clearInput("name","kor","math","eng","sien");
+			
+			document.getElementById("btnput").onclick=function() {
+				var list ="";
+				list += "<table>";
+				list += "<tr>";
+				list += "<td>이름</td><td>국어</td><td>수학</td><td>영어</td><td>과학</td><td>총점</td><td>평균</td>";
+				list += "</tr>";
+				for(i=0;i<students.length;i++)
+				{//배열의 요소 만큼 박복문
+					consolelog.log(ststudents);
+					list += "<tr>"
+					for(var j in students[i])
+						{	//배열의 속성만큼 반복문
+							if(j != "getSum" && j !="getavg")
+							{
+								list += "<td>"+students[i][j]+"</td>"	
+							}
+						}
+					list += "<td>"+students[i].getSum()+"</td>";
+					list += "<td>"+students[i].getavg()+"</td>";
+				}
+				
+				list += "</table>";
+				document.getElementById("write").innerHTML = list;
+			
+				
+			}
+		};
+		
+	}
+
+</script>
+</head>
+<body>
+	이름 : <input type="text" id="name"><br>
+	국어 : <input type="number" id="kor"><br>
+	수학 : <input type="number" id="math"><br>
+	영어 : <input type="number" id="eng"><br>
+	과학 : <input type="number" id="sien"><br>
+	
+	<button id="btnOk">추가</button> &nbsp;&nbsp; <button id="btnput">출력</button>
+	<span id="write"></span>
+	<span id="total"></span>
+</body>
+</html>

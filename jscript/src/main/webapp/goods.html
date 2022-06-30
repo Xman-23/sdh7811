@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<script type="text/javascript">
+	//goods를 표현할 생성자 함수를 만들어봅니다.
+	function Goods(no,item,qty,price,fname)
+	{
+		this.no = no;
+		this.item = item;
+		this.qty = qty;
+		this.price = price;
+		this.fname = fname;
+		
+		this.toString = function()
+		{
+			return this.no+","+this.item+","+this.qty+","+this.price+","+this.fname;
+		}
+	}
+
+	var list = [];
+	list.push(new Goods(1,"축구공1",10,5000,"ball1.jpg"))
+	list.push(new Goods(2,"축구공2",10,5000,"ball2.jpg"))
+	list.push(new Goods(3,"축구공3",10,5000,"ball3.jpg"))
+	list.push(new Goods(4,"축구공4",10,5000,"ball4.jpg"))
+	
+	var str = "";
+	for(i=0; i<list.length;i++)
+	{
+		str += list[i].toString()+ "\n";
+	}
+	alert(str);
+	
+	var arr = [];
+	arr.push("홍길동");
+	arr.push("이순신");
+	
+	var a = [];
+	
+	a.push(3);
+	a.push(100);
+	/*
+	var g1 = new Goods(1,"에스파",1,1,"1");
+	var g2 = new Goods(2,"죽어도무친대",2,2,"2");
+	
+	console.log(g1);
+	console.log(g2);
+	*/
+</script>
+</body>
+</html>

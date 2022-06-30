@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	window.upload=function() {
+		document.getElementById("btnOk").onclick=function() {
+			var arr =[273,32,103,57,52];
+			var result=0;
+			for(var i=0;i<arr.length;i++)
+				{
+				
+					result += arr[i];
+				}
+			document.getElementById("result").innerHTML=result;
+		}
+		
+		
+	}
+	
+	function result() {
+		var arr =[273,32,103,57,52];
+		var result=0;
+		for(var i=0;i<arr.length;i++)
+			{
+			
+				result += arr[i];
+			}
+		
+	}
+
+	function type() {
+		var arr =[273,32,103,57,52];
+		var name ="홍길동";
+		var age = 20;
+		var isStudent = true;
+		console.log(typeof arr);
+		console.log(typeof name);
+		console.log(typeof age);
+		console.log(typeof isStudent);
+		
+	}
+
+</script>
+</head>
+<body>
+ <button id="btnOk">배열의 총합</button>
+ 결과 : <span id=result></span>
+ <hr>
+ <button id="typeOk">자료형 확인</button>
+</body>
+</html>
